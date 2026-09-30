@@ -483,6 +483,34 @@ body {
   color: var(--color-muted);
 }
 
+.calendar-family-intro {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--color-blue-border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--color-slate);
+}
+
+.calendar-family-intro p {
+  margin: 0;
+}
+
+.calendar-family-intro strong {
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.calendar-family-sub {
+  margin-top: 4px !important;
+  font-size: 13.5px;
+  color: var(--color-muted);
+}
+
 /* 7. Newspaper / Photo Diary Card */
 .newspaper-card {
   position: relative;
