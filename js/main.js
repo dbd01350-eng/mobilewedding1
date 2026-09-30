@@ -17,35 +17,147 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2800);
   };
 
-  // 1. Response Buttons (Yes! & Sure)
+  // 1. Google Sheets Webhook URL for RSVP (100% Free Integration)
+  // 구글 스프레드시트 연동 시 발급받은 웹 앱 URL을 아래 따옴표 안에 넣으시면 됩니다.
+  const GOOGLE_SHEET_RSVP_URL = 'https://script.google.com/macros/s/AKfycbyxrW0itpkBi4oT6WkMS0RISLbaOYPTnFpDHqgmAW6Ki3_uU9qV7Nb_YbpIVrdpWKss/exec';
+
+  // 2. RSVP Modal Elements & Controls
+  const rsvpModal = document.getElementById('rsvp-modal');
+  const rsvpCloseBtn = document.getElementById('rsvp-close-btn');
+  const rsvpForm = document.getElementById('rsvp-form');
+  const rsvpSubmitBtn = document.getElementById('rsvp-submit-btn');
+  const rsvpCountGroup = document.getElementById('rsvp-count-group');
+  const rsvpMealGroup = document.getElementById('rsvp-meal-group');
+
+  const openRsvpModal = () => {
+    if (rsvpModal) {
+      rsvpModal.classList.add('show');
+      rsvpModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const nameInput = document.getElementById('rsvp-name');
+      if (nameInput) setTimeout(() => nameInput.focus(), 150);
+    }
+  };
+
+  const closeRsvpModal = () => {
+    if (rsvpModal) {
+      rsvpModal.classList.remove('show');
+      rsvpModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  };
+
+  if (rsvpCloseBtn) {
+    rsvpCloseBtn.addEventListener('click', closeRsvpModal);
+  }
+
+  if (rsvpModal) {
+    rsvpModal.addEventListener('click', (e) => {
+      if (e.target === rsvpModal) {
+        closeRsvpModal();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && rsvpModal && rsvpModal.classList.contains('show')) {
+      closeRsvpModal();
+    }
+  });
+
+  // Toggle Count & Meal visibility on attend change
+  const attendRadios = document.querySelectorAll('input[name="rsvp_attend"]');
+  attendRadios.forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      const isAttending = e.target.value === '참석';
+      if (rsvpCountGroup) rsvpCountGroup.style.display = isAttending ? 'flex' : 'none';
+      if (rsvpMealGroup) rsvpMealGroup.style.display = isAttending ? 'flex' : 'none';
+    });
+  });
+
+  // Connect Response & Attend Buttons to Open RSVP Modal
   const btnYes = document.getElementById('btn-choice-yes');
   const btnSure = document.getElementById('btn-choice-sure');
-  
-  if (btnYes) {
-    btnYes.addEventListener('click', () => {
-      showToast('기쁜 날 와주셔서 정말 감사해요! 🌸');
-    });
-  }
-
-  if (btnSure) {
-    btnSure.addEventListener('click', () => {
-      showToast('소중한 발걸음 설레며 기다릴게요 💖');
-    });
-  }
-
-  // 2. Attend / Convey Buttons
   const btnAttend = document.getElementById('btn-attend');
-  const btnConvey = document.getElementById('btn-convey');
+  const btnConveys = document.querySelectorAll('#btn-convey');
 
-  if (btnAttend) {
-    btnAttend.addEventListener('click', () => {
-      showToast('🌸 2027년 4월 4일에 뵙겠습니다. 감사합니다!');
-    });
-  }
+  if (btnYes) btnYes.addEventListener('click', openRsvpModal);
+  if (btnSure) btnSure.addEventListener('click', openRsvpModal);
+  if (btnAttend) btnAttend.addEventListener('click', openRsvpModal);
 
-  if (btnConvey) {
-    btnConvey.addEventListener('click', () => {
+  btnConveys.forEach((btn) => {
+    btn.addEventListener('click', () => {
       showToast('💌 따뜻한 축하의 마음에 깊이 감사드립니다.');
+    });
+  });
+
+  // RSVP Form Submit Handler
+  if (rsvpForm) {
+    rsvpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('rsvp-name');
+      const name = nameInput ? nameInput.value.trim() : '';
+
+      if (!name) {
+        showToast('성함을 입력해 주세요.');
+        return;
+      }
+
+      const sideInput = document.querySelector('input[name="rsvp_side"]:checked');
+      const attendInput = document.querySelector('input[name="rsvp_attend"]:checked');
+      const mealInput = document.querySelector('input[name="rsvp_meal"]:checked');
+      const countInput = document.getElementById('rsvp-count');
+      const messageInput = document.getElementById('rsvp-message');
+
+      const side = sideInput ? sideInput.value : '신랑측';
+      const attend = attendInput ? attendInput.value : '참석';
+      const count = attend === '참석' && countInput ? countInput.value : '0명';
+      const meal = attend === '참석' && mealInput ? mealInput.value : '식사 안함';
+      const message = messageInput ? messageInput.value.trim() : '';
+      const timestamp = new Date().toLocaleString('ko-KR');
+
+      const payload = { timestamp, side, name, attend, count, meal, message };
+
+      // Button Loading State
+      if (rsvpSubmitBtn) {
+        rsvpSubmitBtn.disabled = true;
+        rsvpSubmitBtn.textContent = '전송 중...';
+      }
+
+      try {
+        // Send to Google Sheets if URL is configured
+        if (GOOGLE_SHEET_RSVP_URL) {
+          await fetch(GOOGLE_SHEET_RSVP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        // Always save locally in browser storage as backup
+        const existingData = JSON.parse(localStorage.getItem('rsvp_list') || '[]');
+        existingData.push(payload);
+        localStorage.setItem('rsvp_list', JSON.stringify(existingData));
+
+        closeRsvpModal();
+        rsvpForm.reset();
+
+        showToast(
+          attend === '참석'
+            ? `🌸 ${name}님, 참석 의사가 전달되었습니다. 감사합니다!`
+            : `💌 ${name}님, 따뜻한 마음 전해주셔서 감사합니다!`
+        );
+      } catch (err) {
+        console.error('RSVP submission error:', err);
+        showToast('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      } finally {
+        if (rsvpSubmitBtn) {
+          rsvpSubmitBtn.disabled = false;
+          rsvpSubmitBtn.textContent = '참석 의사 전달하기';
+        }
+      }
     });
   }
 

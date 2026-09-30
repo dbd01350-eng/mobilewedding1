@@ -325,6 +325,100 @@
       </div>
     </div>
 
+    <!-- RSVP Attendance Modal -->
+    <div id="rsvp-modal" class="rsvp-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="rsvp-modal-title">
+      <div class="rsvp-modal-container">
+        <!-- Modal Header -->
+        <div class="rsvp-modal-header">
+          <span id="rsvp-modal-title" class="rsvp-modal-title">💌 참석 의사 전달하기</span>
+          <button type="button" id="rsvp-close-btn" class="rsvp-close-btn" aria-label="닫기">×</button>
+        </div>
+
+        <!-- Modal Body / Form -->
+        <form id="rsvp-form" class="rsvp-modal-body">
+          <!-- 1. 구분 (신랑측 / 신부측) -->
+          <div class="rsvp-field-group">
+            <label class="rsvp-label">어느 분의 하객이신가요? <span class="rsvp-required">*</span></label>
+            <div class="rsvp-toggle-group">
+              <label class="rsvp-toggle-btn side-groom">
+                <input type="radio" name="rsvp_side" value="신랑측" checked />
+                <span>신랑측 (철용)</span>
+              </label>
+              <label class="rsvp-toggle-btn side-bride">
+                <input type="radio" name="rsvp_side" value="신부측" />
+                <span>신부측 (다은)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2. 성함 -->
+          <div class="rsvp-field-group">
+            <label for="rsvp-name" class="rsvp-label">참석자 성함 <span class="rsvp-required">*</span></label>
+            <input type="text" id="rsvp-name" name="rsvp_name" class="rsvp-input" placeholder="성함을 입력해주세요" required />
+          </div>
+
+          <!-- 3. 참석 여부 -->
+          <div class="rsvp-field-group">
+            <label class="rsvp-label">참석 여부 <span class="rsvp-required">*</span></label>
+            <div class="rsvp-toggle-group">
+              <label class="rsvp-toggle-btn attend-yes">
+                <input type="radio" name="rsvp_attend" value="참석" checked />
+                <span>🌸 참석할게요</span>
+              </label>
+              <label class="rsvp-toggle-btn attend-no">
+                <input type="radio" name="rsvp_attend" value="불참" />
+                <span>💌 마음으로 축하해요</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 4. 동행 인원 (참석 시) -->
+          <div class="rsvp-field-group" id="rsvp-count-group">
+            <label for="rsvp-count" class="rsvp-label">참석 인원 (본인 포함)</label>
+            <div class="rsvp-count-selector">
+              <select id="rsvp-count" name="rsvp_count" class="rsvp-select">
+                <option value="1명" selected>본인 1명</option>
+                <option value="2명">2명 (동반 1인)</option>
+                <option value="3명">3명 (동반 2인)</option>
+                <option value="4명">4명 (동반 3인)</option>
+                <option value="5명 이상">5명 이상 (가족/단체)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 5. 식사 여부 -->
+          <div class="rsvp-field-group" id="rsvp-meal-group">
+            <label class="rsvp-label">식사 여부</label>
+            <div class="rsvp-toggle-group three-cols">
+              <label class="rsvp-toggle-btn meal-btn">
+                <input type="radio" name="rsvp_meal" value="식사 예정" checked />
+                <span>식사 예정</span>
+              </label>
+              <label class="rsvp-toggle-btn meal-btn">
+                <input type="radio" name="rsvp_meal" value="식사 안함" />
+                <span>식사 안함</span>
+              </label>
+              <label class="rsvp-toggle-btn meal-btn">
+                <input type="radio" name="rsvp_meal" value="미정" />
+                <span>미정</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 6. 축하 메시지 (선택) -->
+          <div class="rsvp-field-group">
+            <label for="rsvp-message" class="rsvp-label">축하 한마디 (선택)</label>
+            <textarea id="rsvp-message" name="rsvp_message" class="rsvp-textarea" rows="2" placeholder="신랑·신부에게 따뜻한 축하를 전해주세요"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="rsvp-submit-btn" class="rsvp-submit-btn">
+            <span>참석 의사 전달하기</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
     <script src="js/main.js"></script>
   </body>
 </html>
