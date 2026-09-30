@@ -344,8 +344,10 @@ body {
 
 .cursor-pointer-icon {
   position: absolute;
-  top: 16px;
-  left: 38%;
+  top: 32px;
+  left: 42%;
+  width: 18px;
+  height: 18px;
   pointer-events: none;
   z-index: 5;
   animation: floatCursor 2s ease-in-out infinite;
@@ -666,9 +668,9 @@ body {
   pointer-events: none;
 }
 
-.cursor-pointer-icon {
-  width: 30px !important;
-  height: 32px !important;
+.photo-cursor-badge .cursor-pointer-icon {
+  width: 30px;
+  height: 32px;
   display: block;
   flex-shrink: 0;
 }
