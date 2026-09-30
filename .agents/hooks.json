@@ -1,0 +1,17 @@
+{
+  "hardcode-guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "replace_file_content|write_to_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ../hooks/check-hardcode.mjs",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

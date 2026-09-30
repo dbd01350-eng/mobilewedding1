@@ -1,0 +1,992 @@
+@import url("https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Inter:wght@400;700&display=swap");
+
+:root {
+  /* Color Tokens */
+  --bg-canvas: #eae7df;
+  --bg-paper: #fffdf8;
+  --color-slate: #3f4448;
+  --color-muted: #70767b;
+
+  --color-pink-primary: #d98e98;
+  --color-pink-accent: #72689c;
+  --color-pink-tape: #f2bfc4;
+  --color-pink-badge: #fbe9eb;
+  --color-pink-btn: #fce8e9;
+
+  --color-blue-primary: #789cb4;
+  --color-blue-accent: #afcbdd;
+  --color-blue-border: #c9dbe5;
+  --color-blue-soft: #e8f2f7;
+
+  /* Typography */
+  --font-gaegu: "Gaegu", cursive, sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* Layout */
+  --container-width: 390px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input,
+select,
+textarea,
+a {
+  font-family: inherit;
+}
+
+body {
+  background-color: var(--bg-paper);
+  background-image: url("../assets/background_checkered_paper.svg");
+  background-repeat: repeat;
+  background-position: top center;
+  background-size: 390px auto;
+  color: var(--color-slate);
+  font-family: var(--font-gaegu);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.invitation-container {
+  position: relative;
+  width: 100%;
+  max-width: var(--container-width);
+  min-height: 100vh;
+  background-color: transparent;
+  border-left: 1px solid var(--color-blue-border);
+  border-right: 1px solid var(--color-blue-border);
+  padding: 30px 17px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bg-checkered {
+  display: none;
+}
+
+.content-layer {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ==========================================================
+   2단계 & 3단계: 공통 UI 컴포넌트 및 레이아웃 스타일
+   ========================================================== */
+
+/* 1. Section Divider Tape & Badges */
+.tape-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.tape-line {
+  width: 50px;
+  height: 1.5px;
+  background-color: var(--color-blue-border);
+}
+
+.sticker-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  background-color: var(--color-pink-badge);
+  border: 1px solid var(--color-pink-primary);
+  border-radius: 999px;
+  color: var(--color-pink-primary);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  transform: rotate(-0.5deg);
+}
+
+.section-tape-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tape-deco-pink {
+  width: 32px;
+  height: 13px;
+  background-color: var(--color-pink-tape);
+  display: inline-block;
+  transform: rotate(4.1deg);
+}
+
+.tape-deco-blue {
+  width: 32px;
+  height: 13px;
+  background-color: var(--color-blue-accent);
+  display: inline-block;
+  transform: rotate(-2.9deg);
+}
+
+.tape-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0.5px;
+}
+
+/* 2. Window Container Component */
+.window-card {
+  width: 100%;
+  background-color: var(--bg-paper);
+  border: 1.4px solid var(--color-slate);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.window-header {
+  height: 60.5px;
+  padding: 0 16px;
+  background-color: var(--color-blue-accent);
+  border-bottom: 1.5px solid var(--color-slate);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.window-header-title {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-slate);
+}
+
+.window-close-btn {
+  width: 34.6px;
+  height: 34.6px;
+  background-color: var(--bg-paper);
+  border: 1.5px solid var(--color-slate);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--color-slate);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.window-close-btn:active {
+  transform: scale(0.92);
+  background-color: var(--color-pink-btn);
+}
+
+.window-body {
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 3. Invitation Question & Cursor */
+.invitation-question-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  min-height: 80px;
+}
+
+.invitation-question-box .title-text {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.05;
+  text-align: center;
+  color: var(--color-slate);
+}
+
+.response-choices-container {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.btn-choice-white {
+  flex: 1;
+  height: 50.3px;
+  background-color: var(--bg-paper);
+  border: 1.2px solid var(--color-blue-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-blue-primary);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
+}
+
+/* 체크1 */
+.btn-choice-pink {
+  flex: 1;
+  height: 50.3px;
+  background-color: var(--color-pink-btn);
+  border: 1.2px solid var(--color-pink-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-pink-primary);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
+}
+
+#btn-choice-yes {
+  transform: rotate(-1.6deg);
+}
+
+#btn-choice-yes:active {
+  transform: rotate(-1.6deg) scale(0.96);
+  opacity: 0.85;
+}
+
+#btn-attend {
+  transform: rotate(-0.8deg);
+}
+
+#btn-attend:active {
+  transform: rotate(-0.8deg) scale(0.96);
+  opacity: 0.85;
+}
+
+.btn-choice-blue {
+  flex: 1;
+  height: 47px;
+  background-color: var(--color-blue-soft);
+  border: 1.2px solid var(--color-blue-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-blue-primary);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
+}
+
+#btn-choice-sure {
+  transform: rotate(0.4deg);
+}
+
+#btn-choice-sure:active {
+  transform: rotate(0.4deg) scale(0.96);
+  opacity: 0.85;
+}
+
+#btn-convey {
+  transform: rotate(0.6deg);
+}
+
+#btn-convey:active {
+  transform: rotate(0.6deg) scale(0.96);
+  opacity: 0.85;
+}
+
+.cursor-pointer-icon {
+  position: absolute;
+  top: 16px;
+  left: 38%;
+  pointer-events: none;
+  z-index: 5;
+  animation: floatCursor 2s ease-in-out infinite;
+}
+
+@keyframes floatCursor {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* 4. Schedule & Info Fields */
+.schedule-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.info-field-badge {
+  flex: 1;
+  height: 42px;
+  padding: 0 12px;
+  background-color: var(--bg-paper);
+  border: 1px solid var(--color-pink-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.info-field-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.info-field-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+/* 5. Couple Title Row */
+.couple-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.couple-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.couple-heart {
+  font-size: 24px;
+  color: var(--color-pink-primary);
+}
+
+.venue-note {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+
+.venue-note-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.venue-note-sub {
+  font-family: var(--font-inter);
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+/* 6. Calendar Sticker Box */
+.calendar-card {
+  width: 100%;
+  background-color: var(--bg-paper);
+  border: 1px solid var(--color-blue-primary);
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-month {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-blue-primary);
+}
+
+.calendar-date-pill {
+  padding: 4px 8px;
+  background-color: var(--color-pink-btn);
+  border: 1px solid var(--color-pink-primary);
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-pink-primary);
+  transform: rotate(0.4deg);
+}
+
+.calendar-desc {
+  font-family: var(--font-inter);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+/* 7. Newspaper / Photo Diary Card */
+.newspaper-card {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-paper);
+  border: 1.6px solid var(--color-slate);
+  border-radius: 4px;
+  overflow: hidden;
+  transform: rotate(0.4deg);
+}
+
+.newspaper-header {
+  height: 40.5px;
+  background-color: var(--bg-paper);
+  border-bottom: 1.6px solid var(--color-slate);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.newspaper-title-cell {
+  flex: 1;
+  padding: 6px 10px;
+  border-right: 1.6px solid var(--color-slate);
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.newspaper-weather-cell {
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.newspaper-body {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 186.5px;
+}
+
+.polaroid-photo-frame {
+  margin-left: 20px;
+  padding: 6px 6px 14px;
+  background-color: #ffffff;
+  border: 1px solid #e0ded7;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+.polaroid-img {
+  width: 110px;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+  background-color: #f7f4ec;
+}
+
+.diary-text-col {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0;
+}
+
+.diary-p {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--color-slate);
+  text-align: center;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.diary-underlines {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+  width: 138px;
+  height: 101px;
+  opacity: 0.85;
+}
+
+/* 8. Photo Card (Styled after directions-card) */
+.photo-card {
+  width: 100%;
+  background-color: var(--bg-paper);
+  border: 1.4px solid var(--color-slate);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 12px 30px 0px rgba(107, 122, 130, 0.14);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.photo-card:active {
+  transform: scale(0.985);
+}
+
+.photo-card-inner {
+  position: relative;
+  width: 100%;
+}
+
+.photo-frame-cover {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: #fdfbf7;
+  border: 1.2px solid var(--color-slate);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-placeholder-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 24px 16px;
+}
+
+.photo-placeholder-heart {
+  opacity: 0.85;
+}
+
+.photo-cover-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.photo-cover-sub {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* Bottom-Right Cursor Hint */
+.photo-cursor-badge {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.35));
+  animation: cursorBadgeBounce 1.8s infinite ease-in-out;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.cursor-pointer-icon {
+  width: 30px !important;
+  height: 32px !important;
+  display: block;
+  flex-shrink: 0;
+}
+
+@keyframes cursorBadgeBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* ==========================================================
+   Full Screen Photo Gallery Modal (Minimal Swipe Slider)
+   ========================================================== */
+.gallery-fullscreen-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.96);
+  touch-action: pan-x;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gallery-fullscreen-modal.show {
+  display: block;
+}
+
+/* White Close Button (Top-Right) */
+.gallery-modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  z-index: 10001;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 1;
+  cursor: pointer;
+  padding: 8px;
+  opacity: 0.65;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.gallery-modal-close-btn:active {
+  opacity: 0.35;
+  transform: scale(0.92);
+}
+
+/* Horizontal Slider Container */
+.gallery-slider-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gallery-slider-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Slide Item */
+.gallery-slide-item {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-slide-img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+}
+
+.gallery-slide-fallback {
+  width: 100vw;
+  height: 100vh;
+  background-color: #1a1e22;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* 9. Directions / Map Card */
+.directions-card {
+  width: 100%;
+  background-color: var(--bg-paper);
+  border: 1.4px solid var(--color-slate);
+  border-radius: 14px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0px 12px 30px 0px rgba(107, 122, 130, 0.14);
+}
+
+.venue-header-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.venue-name-lg {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.venue-address-text {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+.notice-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notice-badge-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-pink-primary);
+}
+
+.notice-main-text {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-slate);
+}
+
+.notice-sub-text {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+/* Mini Map & Actions */
+.mini-map-box {
+  background-color: var(--bg-paper);
+  border: 1.2px solid var(--color-pink-primary);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-map-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.mini-map-canvas {
+  height: 180px;
+  width: 100%;
+  background-color: #f7f9fa;
+  border: 1.2px solid var(--color-slate);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-provider-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-map-app {
+  flex: 1;
+  height: 46.6px;
+  background-color: var(--bg-paper);
+  border: 1.2px solid var(--color-slate);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-slate);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.btn-map-app:active {
+  transform: scale(0.96);
+  background-color: #f0eee6; /* token-exempt: button active state background */
+}
+
+/* Transportation Rows */
+.transport-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transport-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.transport-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.transport-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.transport-icon-subway {
+  background-color: var(--color-blue-soft);
+  border: 1.2px solid var(--color-blue-primary);
+}
+
+.transport-icon-bus {
+  background-color: var(--color-pink-btn);
+  border: 1.2px solid var(--color-pink-primary);
+}
+
+.transport-icon-parking {
+  background-color: var(--bg-paper);
+  border: 1.2px solid var(--color-slate);
+}
+
+.transport-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.transport-type-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.transport-detail-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+/* Contact Button */
+.btn-contact-hall {
+  width: 100%;
+  height: 49.4px;
+  background-color: var(--color-pink-btn);
+  border: 1.2px solid var(--color-pink-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-pink-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
+}
+
+.btn-contact-hall:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+/* ==========================================================
+   4단계: 토스트 및 인터랙션 피드백
+   ========================================================== */
+.custom-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(63, 68, 72, 0.95);
+  color: #fffdf8;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  max-width: 90%;
+  text-align: center;
+}
+
+.custom-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

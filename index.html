@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로운 & 지호 모바일 청첩장</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Naver Maps Open API v3 SDK (Injected securely via GitHub Secrets / Actions) -->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=__NAVER_MAP_KEY__"></script>
+  </head>
+  <body>
+    <div class="invitation-container">
+      <!-- Checkered Background Paper -->
+      <img src="assets/background_checkered_paper.svg" alt="" class="bg-checkered" aria-hidden="true" />
+
+      <main class="content-layer">
+        <!-- ======================================================
+           Page 01 / Invitation
+           ====================================================== -->
+        <section class="page-section" id="section-invitation">
+          <!-- Section divider tape -->
+          <div class="tape-divider">
+            <div class="tape-line"></div>
+            <div class="sticker-badge">2027 · 04 · 04</div>
+            <div class="tape-line"></div>
+          </div>
+
+          <!-- Tape label -->
+          <div class="section-tape-label" style="margin-top: 10px; margin-bottom: 12px">
+            <span class="tape-deco-pink"></span>
+            <span class="tape-title">OUR WEDDING DAY</span>
+            <span class="tape-deco-blue"></span>
+          </div>
+
+          <!-- Invitation Window -->
+          <article class="window-card">
+            <!-- Window Header -->
+            <header class="window-header">
+              <h1 class="window-header-title">Roun & Jiho</h1>
+              <button type="button" class="window-close-btn" aria-label="닫기">×</button>
+            </header>
+
+            <!-- Window Content -->
+            <div class="window-body">
+              <!-- Invitation Question Box -->
+              <div class="invitation-question-box">
+                <img src="assets/icon_heart_large.svg" alt="" width="47" height="56" aria-hidden="true" />
+                <p class="title-text">Would you come to<br />Our wedding ?</p>
+                <img src="assets/ring_doodle.svg" alt="" width="45" height="45" aria-hidden="true" />
+              </div>
+
+              <!-- Response Choices -->
+              <div class="response-choices-container">
+                <button type="button" class="btn-choice-pink" id="btn-choice-yes">Yes!</button>
+                <button type="button" class="btn-choice-blue" id="btn-choice-sure">Sure</button>
+                <img src="assets/icon_cursor.svg" alt="" class="cursor-pointer-icon" width="24" height="24" aria-hidden="true" />
+              </div>
+
+              <!-- Schedule Fields -->
+              <div class="schedule-row">
+                <div class="info-field-badge">
+                  <span class="info-field-label">Date :</span>
+                  <span class="info-field-value">2027. 04. 04</span>
+                </div>
+                <div class="info-field-badge">
+                  <span class="info-field-label">Time :</span>
+                  <span class="info-field-value">11:20 AM</span>
+                </div>
+              </div>
+
+              <!-- Couple Title -->
+              <div class="couple-title-row">
+                <span class="couple-name">로운</span>
+                <span class="couple-heart">♡</span>
+                <span class="couple-name">지호</span>
+              </div>
+
+              <!-- Venue Note -->
+              <div class="venue-note">
+                <p class="venue-note-title">더 파티움 여의도 · 그랜드컨벤션 홀</p>
+                <p class="venue-note-sub">서로의 가장 좋은 친구가 된 두 사람이<br />따뜻한 봄날, 한 가족이 됩니다.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Photo Diary Section Tape -->
+          <div class="section-tape-label" style="margin-top: 20px; margin-bottom: 14px">
+            <span class="tape-deco-blue"></span>
+            <span class="tape-title">OUR MOMENTS</span>
+            <span class="tape-deco-pink"></span>
+          </div>
+
+          <!-- Newspaper / Photo Diary Card -->
+          <article class="newspaper-card">
+            <header class="newspaper-header">
+              <div class="newspaper-title-cell">
+                <span>제목 : 오늘은 내 결혼식</span>
+              </div>
+              <div class="newspaper-weather-cell">
+                <img src="assets/icon_sun.svg" alt="맑음" width="19" height="19" />
+                <img src="assets/icon_cloud.svg" alt="구름" width="19" height="19" />
+                <img src="assets/icon_rain.svg" alt="비" width="19" height="19" />
+                <img src="assets/icon_snowman.svg" alt="눈사람" width="19" height="19" />
+              </div>
+            </header>
+            <div class="newspaper-body">
+              <div class="polaroid-photo-frame">
+                <div class="polaroid-img" style="display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--color-muted); text-align: center; line-height: 1.3">우리 둘의<br />웨딩 사진</div>
+              </div>
+              <div class="diary-text-col">
+                <img src="assets/handwritten_underlines.svg" alt="" class="diary-underlines" aria-hidden="true" />
+                <p class="diary-p">2년 동안 같이 놀다가<br />이제 평생 한 집에서<br />같이 놀기로 약속했다.</p>
+                <p class="diary-p">우리 결혼식에 사람들이<br />많이 왔으면 좋겠다.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Save the Date Note -->
+          <div class="section-tape-label" style="margin: 20px">
+            <div style="width: 42px; height: 2px; background-color: var(--color-muted)"></div>
+            <span class="tape-title" style="font-size: 13px">save the date · 2027.04.04</span>
+            <div style="width: 42px; height: 2px; background-color: var(--color-muted)"></div>
+          </div>
+          <!-- ======================================================
+           Page 02 / Story & Gallery
+           ====================================================== -->
+          <section class="page-section" id="section-story">
+            <!-- Gallery Section Tape -->
+            <div class="section-tape-label" style="margin-top: 20px; margin-bottom: 14px">
+              <span class="tape-deco-blue"></span>
+              <span class="tape-title">PHOTO GALLERY</span>
+              <span class="tape-deco-pink"></span>
+            </div>
+
+            <!-- Photo Gallery Card -->
+            <article class="photo-card" id="btn-gallery-open">
+              <div class="photo-card-inner">
+                <div class="photo-frame-cover">
+                  <!-- 대표 웨딩 사진 (src에 실제 사진 파일 경로를 지정하세요) -->
+                  <img src="assets/photo_main.jpg" alt="대표 웨딩 사진" class="photo-main-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  
+                  <!-- 사진이 없을 때 기본 표시되는 프레임 -->
+                  <div class="photo-placeholder-content" style="display: none;">
+                    <img src="assets/icon_heart_large.svg" alt="" width="36" height="42" class="photo-placeholder-heart" />
+                    <span class="photo-cover-text">Our Wedding Moments</span>
+                    <span class="photo-cover-sub">사진을 눌러 전체 갤러리를 감상해보세요</span>
+                  </div>
+                </div>
+
+                <!-- Bottom-Right Cursor Icon -->
+                <div class="photo-cursor-badge">
+                  <img src="assets/icon_cursor.svg" alt="" class="cursor-pointer-icon" width="30" height="32" aria-hidden="true" />
+                </div>
+              </div>
+            </article>
+          </section>
+          <!-- Calendar Sticker Box -->
+           <section class="page-section" id="section-directions" style="margin-top: 10px">
+          
+          <div class="section-tape-label" style="margin-bottom: 14px; margin-top: 20px;">
+            <span class="tape-deco-blue"></span>
+            <span class="tape-title">BE OUR GUEST</span>
+            <span class="tape-deco-pink"></span>
+          </div>
+          <div class="calendar-card">
+            <div class="calendar-header">
+              <span class="calendar-month">April · 2027</span>
+              <span class="calendar-date-pill">4.4 sunday</span>
+            </div>
+            <p class="calendar-desc">오전 11시 20분 · 벚꽃이 가장 예쁜 날에 만나요</p>
+          </div>
+
+          <!-- Bottom Response Buttons -->
+          <div class="response-choices-container" style="margin-top: 14px">
+            <button type="button" class="btn-choice-pink" style="height: 48.4px" id="btn-attend">
+              <img src="assets/icon_heart_small.svg" alt="" width="17" height="17" aria-hidden="true" />
+              <span>참석할게요</span>
+            </button>
+          </div>
+          <div class="response-choices-container" style="margin-top: 14px">
+            <button type="button" class="btn-choice-blue" style="height: 47.8px" id="btn-convey">
+              <img src="assets/icon_mail.svg" alt="" width="17" height="17" aria-hidden="true" />
+              <span>신랑측 마음 전하기</span>
+            </button>
+          </div>
+          <div class="response-choices-container" style="margin-top: 14px">
+            <button type="button" class="btn-choice-white" style="height: 47.8px" id="btn-convey">
+              <img src="assets/icon_mail.svg" alt="" width="17" height="17" aria-hidden="true" />
+              <span>신부측 마음 전하기</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ======================================================
+           Page 03 / Directions
+           ====================================================== -->
+        <section class="page-section" id="section-directions" style="margin-top: 20px">
+          <!-- Directions Section Tape -->
+          <div class="section-tape-label" style="margin-bottom: 14px">
+            <span class="tape-deco-blue"></span>
+            <span class="tape-title">HOW TO GET HERE</span>
+            <span class="tape-deco-pink"></span>
+          </div>
+
+          <!-- Way to Venue Card -->
+          <article class="directions-card">
+            <!-- Venue Header -->
+            <div class="venue-header-box">
+              <h2 class="venue-name-lg">더 파티움 여의도</h2>
+              <p class="venue-address-text">서울 영등포구 은행로 30 B1층, 2층<br />그랜드컨벤션 홀</p>
+            </div>
+
+            <!-- Festival Notice -->
+            <div class="notice-box">
+              <h3 class="notice-badge-title">여의도 벚꽃축제</h3>
+              <p class="notice-main-text">되도록 대중교통을 이용해주시면 감사하겠습니다.</p>
+              <p class="notice-sub-text">부디 오시는 길마저 즐거운 봄날의 나들이로 기억되길 바랍니다.</p>
+            </div>
+
+            <!-- Mini Map Box -->
+            <div class="mini-map-box">
+              <span class="mini-map-header">약도</span>
+
+              <div class="mini-map-canvas" id="map-area"></div>
+
+              <!-- Map Provider App Buttons -->
+              <div class="map-provider-buttons">
+                <a href="https://map.naver.com" target="_blank" rel="noopener noreferrer" class="btn-map-app">
+                  <img src="assets/icon_map.svg" alt="" width="17" height="17" aria-hidden="true" />
+                  <span>네이버 지도</span>
+                </a>
+                <a href="https://map.kakao.com" target="_blank" rel="noopener noreferrer" class="btn-map-app">
+                  <img src="assets/icon_map.svg" alt="" width="17" height="17" aria-hidden="true" />
+                  <span>카카오맵</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Transportation Rows -->
+            <div class="transport-section">
+              <h3 class="transport-heading">교통 안내</h3>
+
+              <!-- Subway -->
+              <div class="transport-row">
+                <div class="transport-icon-box transport-icon-subway">
+                  <img src="assets/icon_train.svg" alt="지하철" width="18" height="18" />
+                </div>
+                <div class="transport-info-col">
+                  <span class="transport-type-label">지하철</span>
+                  <p class="transport-detail-desc">9호선 국회의사당역 3번출구 도보 5분</p>
+                </div>
+              </div>
+
+              <!-- Bus -->
+              <div class="transport-row">
+                <div class="transport-icon-box transport-icon-bus">
+                  <img src="assets/icon_bus.svg" alt="버스" width="18" height="18" />
+                </div>
+                <div class="transport-info-col">
+                  <span class="transport-type-label">버스</span>
+                  <p class="transport-detail-desc">여의나루역 1번출구 셔틀버스 무료운행<br /></p>
+                </div>
+              </div>
+
+              <!-- Parking -->
+              <div class="transport-row">
+                <div class="transport-icon-box transport-icon-parking">
+                  <img src="assets/icon_car.svg" alt="주차" width="18" height="18" />
+                </div>
+                <div class="transport-info-col">
+                  <span class="transport-type-label">주차</span>
+                  <p class="transport-detail-desc">장소 내 주차 가능 · 90분 무료주차</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions: Contact Hall -->
+            <a href="tel:02-784-0000" class="btn-contact-hall">
+              <img src="assets/icon_phone.svg" alt="" width="16" height="16" aria-hidden="true" />
+              <span>웨딩홀 연락하기</span>
+            </a>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <!-- Fullscreen Photo Gallery Modal -->
+    <div id="gallery-modal" class="gallery-fullscreen-modal" aria-hidden="true">
+      <!-- White Close Button on Top Right -->
+      <button type="button" class="gallery-modal-close-btn" id="btn-gallery-close" aria-label="닫기">×</button>
+
+      <!-- Horizontal Photo Slider -->
+      <div class="gallery-slider-container">
+        <div class="gallery-slide-item">
+          <img src="assets/photo_01.jpg" alt="웨딩 사진 1" class="gallery-slide-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="gallery-slide-fallback" style="display: none;">웨딩 사진 01</div>
+        </div>
+        <div class="gallery-slide-item">
+          <img src="assets/photo_02.jpg" alt="웨딩 사진 2" class="gallery-slide-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="gallery-slide-fallback" style="display: none;">웨딩 사진 02</div>
+        </div>
+        <div class="gallery-slide-item">
+          <img src="assets/photo_03.jpg" alt="웨딩 사진 3" class="gallery-slide-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="gallery-slide-fallback" style="display: none;">웨딩 사진 03</div>
+        </div>
+        <div class="gallery-slide-item">
+          <img src="assets/photo_04.jpg" alt="웨딩 사진 4" class="gallery-slide-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="gallery-slide-fallback" style="display: none;">웨딩 사진 04</div>
+        </div>
+        <div class="gallery-slide-item">
+          <img src="assets/photo_05.jpg" alt="웨딩 사진 5" class="gallery-slide-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="gallery-slide-fallback" style="display: none;">웨딩 사진 05</div>
+        </div>
+        <div class="gallery-slide-item">
+          <img src="assets/photo_06.jpg" alt="웨딩 사진 6" class="gallery-slide-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="gallery-slide-fallback" style="display: none;">웨딩 사진 06</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
