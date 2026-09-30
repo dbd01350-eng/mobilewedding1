@@ -132,7 +132,6 @@ body {
   font-size: 13.5px;
   font-weight: 700;
   white-space: nowrap;
-  transform: rotate(-0.5deg);
 }
 
 .section-tape-label {
@@ -248,7 +247,7 @@ body {
 
 .btn-choice-white {
   flex: 1;
-  height: 50.3px;
+  height: 50px;
   background-color: var(--bg-paper);
   border: var(--border-md) solid var(--color-blue-primary);
   border-radius: 8px;
@@ -270,7 +269,7 @@ body {
 /* 체크1 */
 .btn-choice-pink {
   flex: 1;
-  height: 50.3px;
+  height: 47px;
   background-color: var(--color-pink-btn);
   border: var(--border-md) solid var(--color-pink-primary);
   border-radius: 8px;
@@ -290,20 +289,10 @@ body {
 }
 
 #btn-choice-yes {
-  transform: rotate(-1.6deg);
 }
 
 #btn-choice-yes:active {
-  transform: rotate(-1.6deg) scale(0.96);
-  opacity: 0.85;
-}
-
-#btn-attend {
-  transform: rotate(-0.8deg);
-}
-
-#btn-attend:active {
-  transform: rotate(-0.8deg) scale(0.96);
+  transform: scale(0.96);
   opacity: 0.85;
 }
 
@@ -329,20 +318,37 @@ body {
 }
 
 #btn-choice-sure {
-  transform: rotate(0.4deg);
 }
 
 #btn-choice-sure:active {
-  transform: rotate(0.4deg) scale(0.96);
+  transform: scale(0.96);
   opacity: 0.85;
 }
 
-#btn-convey {
-  transform: rotate(0.6deg);
+/* 하단 1. 신부측 마음 전하기 */
+#btn-convey-bride {
 }
 
-#btn-convey:active {
-  transform: rotate(0.6deg) scale(0.96);
+#btn-convey-bride:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+/* 하단 2. 신랑측 마음 전하기 */
+#btn-convey-groom {
+}
+
+#btn-convey-groom:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+/* 하단 3. 참석할게요 */
+#btn-attend {
+}
+
+#btn-attend:active {
+  transform: scale(0.96);
   opacity: 0.85;
 }
 
@@ -477,7 +483,6 @@ body {
   font-size: 14px;
   font-weight: 700;
   color: var(--color-pink-primary);
-  transform: rotate(0.4deg);
 }
 
 .calendar-desc {
@@ -523,7 +528,6 @@ body {
   border: var(--border-lg) solid var(--color-slate);
   border-radius: 4px;
   overflow: hidden;
-  transform: rotate(0.4deg);
 }
 
 .newspaper-header {
@@ -1298,4 +1302,236 @@ body {
   border-color: var(--color-pink-primary);
   color: var(--color-pink-primary);
   border-width: var(--border-md);
+}
+
+/* ==========================================================
+   6단계: 마음 전하기 (계좌번호 & 송금) 모달 스타일
+   ========================================================== */
+.account-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(63, 68, 72, 0.65); /* token-exempt: modal backdrop */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.account-modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.account-modal-container {
+  width: 100%;
+  max-width: 360px;
+  background-color: var(--bg-paper);
+  border: var(--border-lg) solid var(--color-slate);
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2); /* token-exempt: modal shadow */
+  overflow: hidden;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.account-modal-overlay.show .account-modal-container {
+  transform: translateY(0) scale(1);
+}
+
+.account-modal-header {
+  height: 48px;
+  padding: 0 16px;
+  border-bottom: var(--border-lg) solid var(--color-slate);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.account-modal-header.header-groom {
+  background-color: var(--color-blue-accent);
+}
+
+.account-modal-header.header-bride {
+  background-color: var(--color-pink-tape);
+}
+
+.account-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.account-close-btn {
+  width: 28px;
+  height: 28px;
+  background-color: var(--bg-paper);
+  border: var(--border-lg) solid var(--color-slate);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-slate);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.account-close-btn:active {
+  transform: scale(0.92);
+  background-color: var(--color-pink-btn);
+}
+
+.account-modal-body {
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.account-modal-desc {
+  font-size: 14px;
+  color: var(--color-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.account-card-item-groom {
+  background-color: var(--bg-paper);
+  border: var(--border-md) solid var(--color-blue-border);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.account-card-item-bride {
+  background-color: var(--bg-paper);
+  border: var(--border-md) solid var(--color-pink-tape);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-info-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.account-role-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.account-role-badge.groom-badge {
+  background-color: var(--color-blue-soft);
+  color: var(--color-blue-primary);
+  border: var(--border-sm) solid var(--color-blue-primary);
+}
+
+.account-role-badge.bride-badge {
+  background-color: var(--color-pink-badge);
+  color: var(--color-pink-primary);
+  border: var(--border-sm) solid var(--color-pink-primary);
+}
+
+.account-holder-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.account-number-box {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 10px;
+  background-color: var(--color-blue-soft);
+  border-radius: 8px;
+}
+
+.header-bride + .account-modal-body .account-number-box {
+  background-color: var(--color-pink-btn);
+}
+
+.account-bank-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-slate);
+}
+
+.account-number-text {
+  font-family: var(--font-inter);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--color-slate);
+}
+
+.account-action-buttons {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.btn-account-copy,
+.btn-account-kakaopay {
+  flex: 1;
+  height: 42px;
+  border-radius: 8px;
+  font-family: var(--font-gaegu);
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition:
+    transform 0.1s ease,
+    background-color 0.1s ease,
+    opacity 0.1s ease;
+}
+
+.btn-account-copy {
+  background-color: var(--bg-paper);
+  border: var(--border-md) solid var(--color-slate);
+  color: var(--color-slate);
+}
+
+.btn-account-copy:active {
+  transform: scale(0.96);
+  background-color: #f0eee6; /* token-exempt: button active bg */
+}
+
+.btn-account-kakaopay {
+  background-color: #fee500; /* token-exempt: official kakao yellow */
+  border: var(--border-md) solid #3c1e1e; /* token-exempt: official kakao border */
+  color: #3c1e1e; /* token-exempt: official kakao brown text */
+}
+
+.btn-account-kakaopay:active {
+  transform: scale(0.96);
+  opacity: 0.85;
 }

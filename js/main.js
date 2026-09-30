@@ -79,17 +79,100 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnYes = document.getElementById('btn-choice-yes');
   const btnSure = document.getElementById('btn-choice-sure');
   const btnAttend = document.getElementById('btn-attend');
-  const btnConveys = document.querySelectorAll('#btn-convey');
 
   if (btnYes) btnYes.addEventListener('click', openRsvpModal);
   if (btnSure) btnSure.addEventListener('click', openRsvpModal);
   if (btnAttend) btnAttend.addEventListener('click', openRsvpModal);
 
-  btnConveys.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      showToast('💌 따뜻한 축하의 마음에 깊이 감사드립니다.');
+  // 3. Account Modals (Groom & Bride) Logic
+  const modalGroom = document.getElementById('account-modal-groom');
+  const modalBride = document.getElementById('account-modal-bride');
+  const btnConveyGroom = document.getElementById('btn-convey-groom');
+  const btnConveyBride = document.getElementById('btn-convey-bride');
+
+  const openAccountModal = (modal) => {
+    if (modal) {
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeAccountModal = (modal) => {
+    if (modal) {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  };
+
+  if (btnConveyGroom) {
+    btnConveyGroom.addEventListener('click', () => openAccountModal(modalGroom));
+  }
+
+  if (btnConveyBride) {
+    btnConveyBride.addEventListener('click', () => openAccountModal(modalBride));
+  }
+
+  // Account Modal Close Handlers (Buttons & Overlay)
+  document.querySelectorAll('.account-modal-overlay').forEach((modal) => {
+    const closeBtn = modal.querySelector('.account-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => closeAccountModal(modal));
+    }
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeAccountModal(modal);
+      }
     });
   });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAccountModal(modalGroom);
+      closeAccountModal(modalBride);
+    }
+  });
+
+  // Account Copy Button Logic
+  document.querySelectorAll('.btn-account-copy').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      const accountText = e.currentTarget.getAttribute('data-account') || '';
+      if (!accountText) return;
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(accountText);
+        } else {
+          // Fallback
+          const textarea = document.createElement('textarea');
+          textarea.value = accountText;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+        showToast('📋 계좌번호가 복사되었습니다 ✨');
+      } catch (err) {
+        console.error('Clipboard copy error:', err);
+        showToast('계좌번호 복사에 실패했습니다.');
+      }
+    });
+  });
+
+  // Groom Kakao Link fallback handler
+  const btnKakaoGroom = document.getElementById('btn-kakao-groom');
+  if (btnKakaoGroom) {
+    btnKakaoGroom.addEventListener('click', (e) => {
+      const href = btnKakaoGroom.getAttribute('href');
+      if (!href || href === '#') {
+        e.preventDefault();
+        showToast('신랑측 카카오 송금 링크 준비 중입니다. [계좌 복사]를 이용해 주세요!');
+      }
+    });
+  }
 
   // RSVP Form Submit Handler
   if (rsvpForm) {

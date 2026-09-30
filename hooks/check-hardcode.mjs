@@ -17,6 +17,8 @@ const ALLOWED_DOMAINS = [
   'map.naver.com',
   'map.kakao.com',
   'tmap.co.kr',
+  'qr.kakaopay.com',
+  'kakaopay.com',
 ];
 
 // 2. Inspection patterns
