@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2800);
   };
 
+  // Demo Page Environment Check (데모 페이지에서는 실제 구글 드라이브/시트 기록 차단)
+  const isDemoPage =
+    document.body.dataset.demo === 'true' ||
+    window.location.pathname.endsWith('demo.html') ||
+    window.location.href.includes('demo.html');
+
   // 1. Google Sheets Webhook URL for RSVP (100% Free Integration)
   // 구글 스프레드시트 연동 시 발급받은 웹 앱 URL을 아래 따옴표 안에 넣으시면 됩니다.
   const GOOGLE_SHEET_RSVP_URL = 'https://script.google.com/macros/s/AKfycbyRpBZMmXNy1Scj5YMFaS2DztLaOVrj5fyL358FblVtIc89pgftdQMJI4RP1xrVQ-n_/exec';
@@ -201,6 +207,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const timestamp = new Date().toLocaleString('ko-KR');
 
       const payload = { timestamp, side, name, attend, count, meal, message };
+
+      // Demo Mode: Do not send to real Google Sheets
+      if (isDemoPage) {
+        closeRsvpModal();
+        rsvpForm.reset();
+        showToast(
+          attend === '참석'
+            ? `🌸 [데모] ${name}님, 참석 의사가 전달되었습니다! (실제 시트에는 기록되지 않습니다)`
+            : `💌 [데모] ${name}님, 따뜻한 마음 전해주셔서 감사합니다! (실제 시트에는 기록되지 않습니다)`
+        );
+        return;
+      }
 
       // Button Loading State
       if (rsvpSubmitBtn) {
@@ -395,6 +413,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!files.length) return;
 
       const originalBtnHTML = btnOpenUpload.innerHTML;
+
+      // Demo Mode: Do not upload to real Google Drive
+      if (isDemoPage) {
+        showToast(`📸 [데모] ${files.length}장의 사진이 전달되었습니다! (실제 드라이브에는 저장되지 않습니다)`);
+        directPhotoInput.value = '';
+        return;
+      }
+
       btnOpenUpload.disabled = true;
       btnOpenUpload.innerHTML = '<span>사진 전송 중... ⏳</span>';
       showToast(`${files.length}장의 사진을 전송 중입니다... ⏳`);

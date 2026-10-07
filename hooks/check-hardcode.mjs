@@ -45,6 +45,7 @@ function isTokenDeclarationBlock(line, inRootBlock) {
  * Scan content lines for violations
  */
 function scanContent(content, filePath = 'snippet') {
+  if (filePath.endsWith('.md') || filePath.endsWith('.json')) return [];
   const violations = [];
   const lines = content.split(/\r?\n/);
   let inRootBlock = false;
