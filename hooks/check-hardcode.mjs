@@ -19,6 +19,10 @@ const ALLOWED_DOMAINS = [
   'tmap.co.kr',
   'qr.kakaopay.com',
   'kakaopay.com',
+  'script.google.com',
+  'drive.google.com',
+  'www.w3.org',
+  'w3.org',
 ];
 
 // 2. Inspection patterns

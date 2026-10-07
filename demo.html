@@ -287,6 +287,32 @@
             </a>
           </article>
         </section>
+
+        <!-- ======================================================
+           Page 04 / Share Photo & Moments (하객 사진 공유)
+           ====================================================== -->
+        <section class="page-section" id="section-photo-share" style="margin-top: 20px">
+          <!-- Photo Share Section Tape -->
+          <div class="section-tape-label" style="margin-bottom: 14px">
+            <span class="tape-deco-pink"></span>
+            <span class="tape-title">SHARE YOUR MOMENTS</span>
+            <span class="tape-deco-blue"></span>
+          </div>
+
+          <!-- Photo Share Card -->
+          <article class="photo-share-card">
+            <div class="photo-share-intro">
+              <h3 class="photo-share-title">오늘의 순간을 함께 나눠주세요</h3>
+              <p class="photo-share-desc">하객분들의 시선으로 담아주신 예쁜 사진과 영상을 보내주시면<br />신랑·신부에게 소중하고 큰 선물이 됩니다 📸</p>
+            </div>
+            <div class="response-choices-container" style="margin-top: 14px">
+              <button type="button" class="btn-choice-white" style="height: 48.4px" id="btn-open-upload">
+                <img src="assets/icon_camera.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <span>사진·동영상 전달하기</span>
+              </button>
+            </div>
+          </article>
+        </section>
       </main>
     </div>
 
@@ -479,6 +505,58 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Photo Upload Modal (하객 사진 업로드 모달) -->
+    <div id="upload-modal" class="rsvp-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="upload-modal-title">
+      <div class="rsvp-modal-container">
+        <!-- Modal Header -->
+        <div class="rsvp-modal-header" style="background-color: var(--color-pink-tape)">
+          <span id="upload-modal-title" class="rsvp-modal-title">📸 사진·동영상 선물하기</span>
+          <button type="button" id="upload-close-btn" class="rsvp-close-btn" aria-label="닫기">×</button>
+        </div>
+
+        <!-- Modal Body / Form -->
+        <form id="upload-form" class="rsvp-modal-body">
+          <p class="account-modal-desc" style="margin-bottom: 2px">구글 로그인 없이 바로 신랑·신부의 드라이브로 사진이 안전하게 전달됩니다.</p>
+
+          <!-- 1. 보낸 분 성함 -->
+          <div class="rsvp-field-group">
+            <label for="upload-user-name" class="rsvp-label">보내시는 분 성함 <span class="rsvp-required">*</span></label>
+            <input type="text" id="upload-user-name" name="upload_name" class="rsvp-input" placeholder="성함 또는 관계를 입력해주세요 (예: 친구 홍길동)" required />
+          </div>
+
+          <!-- 2. 사진/영상 파일 선택 -->
+          <div class="rsvp-field-group">
+            <label class="rsvp-label">사진 / 동영상 선택 <span class="rsvp-required">*</span></label>
+            <input type="file" id="upload-file-input" name="upload_files" accept="image/*,video/*" multiple style="display: none" />
+            <button type="button" id="btn-select-files" class="btn-file-select">
+              <img src="assets/icon_camera.svg" alt="" width="20" height="20" aria-hidden="true" />
+              <span>사진 / 영상 선택하기 (여러 장 가능)</span>
+            </button>
+            <div id="upload-file-summary" class="upload-file-summary" style="display: none">
+              <span id="upload-file-count" class="upload-file-count">0개의 파일 선택됨</span>
+              <div id="upload-file-preview-list" class="upload-file-preview-list"></div>
+            </div>
+          </div>
+
+          <!-- 3. 축하 한마디 (선택) -->
+          <div class="rsvp-field-group">
+            <label for="upload-user-message" class="rsvp-label">축하 한마디 (선택)</label>
+            <textarea id="upload-user-message" name="upload_message" class="rsvp-textarea" rows="2" placeholder="사진과 함께 전할 따뜻한 축하 메시지"></textarea>
+          </div>
+
+          <!-- 4. Submit Button -->
+          <button type="submit" id="upload-submit-btn" class="rsvp-submit-btn" style="border-color: var(--color-pink-primary); color: var(--color-pink-primary)">
+            <span>사진 업로드하기</span>
+          </button>
+
+          <!-- 5. 구글 드라이브 직접 보기 링크 -->
+          <a href="https://drive.google.com/drive/folders/1jG1ujZpW-I50bLb9ANM70MhKCZy_TcKi?usp=sharing" target="_blank" rel="noopener noreferrer" class="upload-direct-link"> <!-- token-exempt: drive folder link -->
+            <span>📂 구글 드라이브 폴더 바로 열기 (구글 로그인 필요)</span>
+          </a>
+        </form>
       </div>
     </div>
 

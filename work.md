@@ -10,6 +10,9 @@
 - **Git 명령어 임의 실행 금지 (Strict Prohibition of Arbitrary Git Operations)**:
   - 에이전트는 사용자의 명시적인 지시나 사전 승인 없이 `git push`, `git pull`, `git commit`, `git reset`, `git merge`, `git checkout` 등 Git 원격/로컬 형상을 변경하는 명령어를 절대로 임의로 실행하지 않습니다.
   - 모든 Git 커밋 및 푸시/풀 작업은 반드시 사용자의 명시적인 요청이 있을 때만 수행합니다.
+- **데모 버전(demo.html) 업데이트 규칙 (Demo Version Update Rule)**:
+  - `demo.html` (공개 데모 버전)은 사용자가 명시적으로 **"개인정보 안 들어간 버전으로 업데이트해줘"**라고 요청할 때만 업데이트합니다.
+  - 사용자의 명시적인 요청이 없는 일반 작업 시에는 `demo.html`을 임의로 수정하거나 생성하거나 동기화하지 않습니다.
 - **워크스페이스 작업 지침 준수**:
   - 작업을 시작할 때 항상 이 `work.md` 파일의 지침을 먼저 확인하고 철저히 준수합니다.
 

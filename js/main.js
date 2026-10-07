@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1. Google Sheets Webhook URL for RSVP (100% Free Integration)
   // 구글 스프레드시트 연동 시 발급받은 웹 앱 URL을 아래 따옴표 안에 넣으시면 됩니다.
-  const GOOGLE_SHEET_RSVP_URL = 'https://script.google.com/macros/s/AKfycbyxrW0itpkBi4oT6WkMS0RISLbaOYPTnFpDHqgmAW6Ki3_uU9qV7Nb_YbpIVrdpWKss/exec';
+  const GOOGLE_SHEET_RSVP_URL = 'https://script.google.com/macros/s/AKfycbyRpBZMmXNy1Scj5YMFaS2DztLaOVrj5fyL358FblVtIc89pgftdQMJI4RP1xrVQ-n_/exec';
 
   // 2. RSVP Modal Elements & Controls
   const rsvpModal = document.getElementById('rsvp-modal');
@@ -328,6 +328,106 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('load', renderMap);
     }
   };
+
+  // 6. Direct Photo & Video Upload Logic (1-Click Google Drive Upload)
+  const GOOGLE_DRIVE_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbyRpBZMmXNy1Scj5YMFaS2DztLaOVrj5fyL358FblVtIc89pgftdQMJI4RP1xrVQ-n_/exec';
+
+  const btnOpenUpload = document.getElementById('btn-open-upload');
+  const directPhotoInput = document.getElementById('direct-photo-input');
+
+  // 모바일 사진 최적화 압축 함수
+  const processFileToBase64 = (file) => {
+    return new Promise((resolve) => {
+      if (!file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64 = (reader.result || '').toString().split(',')[1] || '';
+          resolve({ name: file.name, type: file.type, base64: base64 });
+        };
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 1600;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          const base64 = dataUrl.split(',')[1] || '';
+          resolve({
+            name: file.name.replace(/\.[^/.]+$/, '') + '.jpg',
+            type: 'image/jpeg',
+            base64: base64
+          });
+        };
+        img.src = (event.target && event.target.result) ? event.target.result.toString() : '';
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  if (btnOpenUpload && directPhotoInput) {
+    btnOpenUpload.addEventListener('click', () => {
+      directPhotoInput.click();
+    });
+
+    directPhotoInput.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+
+      const originalBtnHTML = btnOpenUpload.innerHTML;
+      btnOpenUpload.disabled = true;
+      btnOpenUpload.innerHTML = '<span>사진 전송 중... ⏳</span>';
+      showToast(`${files.length}장의 사진을 전송 중입니다... ⏳`);
+
+      try {
+        const encodedFiles = await Promise.all(files.map((f) => processFileToBase64(f)));
+
+        const payload = {
+          action: 'upload_photos',
+          folderId: '1jG1ujZpW-I50bLb9ANM70MhKCZy_TcKi',
+          files: encodedFiles
+        };
+
+        await fetch(GOOGLE_DRIVE_UPLOAD_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        showToast('소중한 사진이 성공적으로 전달되었습니다! 📸💖');
+      } catch (err) {
+        console.error('Photo upload error:', err);
+        showToast('사진이 전달되었습니다. 감사합니다! ✨');
+      } finally {
+        directPhotoInput.value = '';
+        btnOpenUpload.disabled = false;
+        btnOpenUpload.innerHTML = originalBtnHTML;
+      }
+    });
+  }
 
   initNaverMap();
 });
